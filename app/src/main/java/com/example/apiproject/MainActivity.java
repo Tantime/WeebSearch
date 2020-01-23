@@ -3,6 +3,8 @@ package com.example.apiproject;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,13 +22,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText editTextSearch;
+    private Button buttonRandom;
     private ImageView imageViewWeeb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_weebs_list);
 
         wireWidgets();
 
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
         WeebService weebService = retrofit.create(WeebService.class);
 
-        Call<Weeb> weebCall = weebService.getListByInput("haikyu");
+        Call<Weeb> weebCall = weebService.getRandomImageById("6");
         weebCall.enqueue(new Callback<Weeb>() {
             @Override
             public void onResponse(Call<Weeb> call, Response<Weeb> response) {
@@ -56,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        editTextSearch.setOnClickListener(new View.OnClickListener() {
+        buttonRandom.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 randomWeeb(weebService);
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void randomWeeb(WeebService weebService) {
-        Call<Weeb> dogCall = weebService.getListByInput("hound");
+        Call<Weeb> dogCall = weebService.getRandomImageById("6");
         dogCall.enqueue(new Callback<Weeb>() {
             @Override
             public void onResponse(Call<Weeb> call, Response<Weeb> response) {
@@ -87,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void wireWidgets() {
-        editTextSearch = findViewById(R.id.editText_main_search);
+        buttonRandom = findViewById(R.id.button_main_random);
         imageViewWeeb = findViewById(R.id.imageView_main_weebImage);
     }
 }

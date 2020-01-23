@@ -9,6 +9,6 @@ public interface WeebService {
 
     String BASE_URL = "https://api.jikan.moe/v3/";
 
-    @GET("search")
-    Call<Weeb> getListByInput(@Query("anime_name") String input);
+    @GET("/anime/{id}/pictures")
+    Call<Weeb> getRandomImageById(@Path("id") String title);
 }
